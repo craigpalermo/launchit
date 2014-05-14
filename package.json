@@ -1,0 +1,20 @@
+{
+  "name": "MySite",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "jade": "*",
+    "coffee-script": "*",
+    "grunt": "~0.4.4",
+    "grunt-shell": "~0.7.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-coffee": "~0.10.1",
+    "grunt-contrib-jade": "~0.11.0"
+  },
+  "scripts": {
+    "postinstall": "bower install && bower-installer",
+    "start": "python manage.py runserver 0.0.0.0:8000"
+  },
+  "devDependencies": {
+  }
+}

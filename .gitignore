@@ -1,0 +1,12 @@
+*.pyc
+env/
+bower_components/
+node_modules/
+vendor/
+.env
+dist/
+.sass-cache/
+*.db
+.coverage*
+htmlcov
+.noseids

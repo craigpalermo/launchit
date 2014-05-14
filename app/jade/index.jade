@@ -1,0 +1,45 @@
+html.no-js(ng-app="App")
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge,chome=1")
+    meta(name="viewport", content="width=device-width")
+
+    //- Angular scripts
+    script(type="text/javascript", src="/static/vendor/angular/angular.js")
+    script(type="text/javascript", src="/static/vendor/angular-route/angular-route.js")
+    script(type="text/javascript", src="/static/js/source.js")
+
+    //- Other scripts
+    script(type="text/javascript", src="/static/vendor/jquery/jquery.js")
+    script(type="text/javascript", src="/static/vendor/bootstrap/bootstrap.js")
+
+    //- Stylesheets
+    link(rel="stylesheet", href="/static/vendor/bootstrap/bootstrap.css")
+
+  body
+    .container
+      div.page-header
+        h1
+          a(href='#/') Launch It With Me
+
+        .row
+          div.col-md-2
+            ul.nav.nav-pills.nav-stacked
+              li
+                a(href='#/') Home
+              li
+                a(href='#/register', ng-hide="user") Sign Up
+              li(ng-show="user")
+                a(href='logout/') Sign Out
+          div.col-md-10
+            div.view-frame(ng-view)
+
+    {% if user.is_authenticated %}
+    script.
+      App.run(function($rootScope) {
+        $rootScope.user = {{user_json|safe}};
+      });
+      App.config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.headers.common['Authorization'] = 'Token {{user.api_key}}';
+      }]);
+    {% endif %}
