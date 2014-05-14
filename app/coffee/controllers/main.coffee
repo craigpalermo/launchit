@@ -3,9 +3,9 @@
 App = angular.module("App")
 
 App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
-    $scope.submit = ->
+    if $rootScope.user
         data = {
-            zipcode:  $scope.zipcode
+            zipcode:  $rootScope.user.profile.zipcode
         }
 
         # send data to server
@@ -23,7 +23,5 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
           $scope.loading = false
           return
         )
-
-    return
 
 return
