@@ -9,7 +9,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from models.user_profile import UserProfile
-from zipcode import zips_view
+from util.zipcode import zips_view
 import json
 
 # Enable the admin site
