@@ -2,6 +2,7 @@ div(ng-controller="MainCtrl")
   form(role="form", ng-submit='submit()')
     div.form-group
       input.form-control(type="text", ng-model='zipcode', placeholder="Zipcode", required)
-    div.form-group
-      input.form-control(type="text", ng-model='range', placeholder="Range", required)
     button.btn.btn-default(type='submit') Submit
+
+  ul
+    li(ng-repeat="user in users") {{ user.username }} {{ user.zipcode }}

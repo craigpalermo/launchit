@@ -8,7 +8,7 @@ from rest_framework import generics
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('confirmed_email',)
+        fields = ('confirmed_email', 'zipcode')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     api_key = serializers.Field(source='api_key')

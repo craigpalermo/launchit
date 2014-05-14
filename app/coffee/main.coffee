@@ -8,13 +8,13 @@ App.controller "MainCtrl", ($scope, $http) ->
         }
 
         # send data to server
-        response = $http.post("/zips", data)
+        response = $http.post("/api/users_in_range", data)
         
         # response was success
         response.success((data, status) ->
-            console.log "here"
             for key, value of data
                   console.log "#{key} and #{value}"
+            $scope.users = data
         )
         
         # response was error

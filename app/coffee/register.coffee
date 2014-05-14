@@ -40,7 +40,7 @@ App.controller "RegistrationCtrl", ($scope, $http, $location, $rootScope) ->
               return
             )
 
-        return
+    return
 
   return
 

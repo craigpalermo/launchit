@@ -2,17 +2,45 @@ from math import sin, cos, sqrt, atan2, radians
 from django.db import connection
 from django.utils import simplejson
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
+from app.models.user_profile import UserProfile
+from app import api
 from JSONResponse import JSONResponse
 import json
 import math
 import operator
 
 @csrf_exempt
+def users_in_range(request):
+    # get zipcodes in range
+    range = 10
+    data = json.loads(request.body)
+    zipcode = data['zipcode']
+    zips = get_zips_in_range(zipcode, range)
+
+    # extract just the zipcode from query results
+    only_zips = []
+    for zip in zips:
+        only_zips.append(zip[0])
+
+    # get users in those zipcodes
+    users_in_range = UserProfile.objects.filter(zipcode__in=only_zips)
+    results = []
+
+    for profile in users_in_range:
+        serializer = api.user.UserSerializer(profile.user)
+        results.append(serializer.data)
+
+    return JSONResponse(results)
+    
+@csrf_exempt
 def zips_view(request):
-   data = json.loads(request.body)
-   result = get_zips_in_range(data['zipcode'], data['range'])
-   print result
-   return JSONResponse(result)
+    '''
+    returns json containing all zipcodes within range of the given zipcode
+    '''
+    data = json.loads(request.body)
+    result = get_zips_in_range(data['zipcode'], data['range'])
+    return JSONResponse(result)
 
 def calculate_milage(lat1, long1, lat2, long2):
     # Convert latitude and longitude to 
