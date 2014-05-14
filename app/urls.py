@@ -9,6 +9,7 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from models.user_profile import UserProfile
+from zipcode import zips_view
 import json
 
 # Enable the admin site
@@ -117,6 +118,8 @@ urlpatterns = patterns('',
     url(r'^admin/?', include(admin.site.urls)),
 
     url(r'^api', include(api.urls)),
+
+    url(r'^zips', zips_view),
 
     # log in, log out routes.
     url(r'^auth/?', auth, name='auth'),
