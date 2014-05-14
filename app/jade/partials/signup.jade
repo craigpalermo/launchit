@@ -1,5 +1,5 @@
 .row
-  div.col-md-6(ng-controller='RegistrationCtrl')
+  div.col-md-6(ng-controller="RegistrationCtrl")
     h2 Sign Up
     form#signup(role="form", ng-submit='register()')
 
@@ -18,7 +18,7 @@
       
       button.btn.btn-default(type="submit") Register
 
-  div.col-md-6(ng-controller='LoginCtrl')
+  div.col-md-6(ng-controller="LoginCtrl")
     h2 Sign In
     form#signin(role="form", ng-submit="login()")
       span {{ message }}

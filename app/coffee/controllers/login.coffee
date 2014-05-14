@@ -1,6 +1,9 @@
-"use strict"
+'use strict'
+
+App = angular.module('App')
 
 App.controller "LoginCtrl", ($scope, $http, $location, $rootScope) ->
+    # Login Form
     $scope.login = ->
         $scope.error = false
         $scope.loading = true
@@ -30,6 +33,5 @@ App.controller "LoginCtrl", ($scope, $http, $location, $rootScope) ->
         )
 
         return
-
     return
-
+return

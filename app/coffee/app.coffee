@@ -4,9 +4,10 @@ App = angular.module("App", ["ngRoute"]).config([
   "$locationProvider"
   ($routeProvider) ->
     $routeProvider.when("/",
-      templateUrl: "/static/views/home.html"
+        templateUrl: "/static/views/home.html",
+        controller:  "MainCtrl"
     ).when("/register",
-      templateUrl: "/static/views/signup.html",
+        templateUrl: "/static/views/signup.html"
     ).otherwise(redirectTo: "/")
 ])
 

@@ -1,6 +1,9 @@
-"use strict"
+'use strict'
+
+App = angular.module("App")
 
 App.controller "RegistrationCtrl", ($scope, $http, $location, $rootScope) ->
+    # Registration Form
     $scope.register = ->
         $scope.error = false
         $scope.loading = true
@@ -40,7 +43,8 @@ App.controller "RegistrationCtrl", ($scope, $http, $location, $rootScope) ->
               return
             )
 
+        return
+
     return
 
-  return
-
+return

@@ -1,10 +1,11 @@
-"use strict"
+'use strict'
 
-App.controller "MainCtrl", ($scope, $http) ->
+App = angular.module("App")
+
+App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
     $scope.submit = ->
         data = {
             zipcode:  $scope.zipcode
-            range:    $scope.range
         }
 
         # send data to server
@@ -12,9 +13,8 @@ App.controller "MainCtrl", ($scope, $http) ->
         
         # response was success
         response.success((data, status) ->
-            for key, value of data
-                  console.log "#{key} and #{value}"
             $scope.users = data
+            return
         )
         
         # response was error
