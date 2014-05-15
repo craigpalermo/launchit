@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from models.user_profile import UserProfile
 from util.zipcode import zips_view, users_in_range
+from util.JSONResponse import JSONResponse
 import json
 
 # Enable the admin site
@@ -18,16 +19,6 @@ admin.autodiscover()
 
 # Import the API
 from app import api
-
-
-class JSONResponse(HttpResponse):
-    """
-    An HttpResponse that renders it's content into JSON.
-    """
-    def __init__(self, data, **kwargs):
-        content = JSONRenderer().render(data)
-        kwargs['content_type'] = 'application/json'
-        super(JSONResponse, self).__init__(content, **kwargs)
 
 
 # define the catch all

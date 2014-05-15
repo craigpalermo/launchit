@@ -2,11 +2,13 @@ from app.models import Model
 from django.db import models
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from interest import Interest
 
 class UserProfile(Model):
     user = models.ForeignKey(User, unique=True)
     zipcode = models.CharField(max_length=5)
     confirmed_email = models.BooleanField(default=False)
+    interests = models.ManyToManyField(Interest)
 
     def __unicode__(self):
         return self.user.username

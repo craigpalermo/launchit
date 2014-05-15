@@ -8,7 +8,7 @@ from rest_framework import generics
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('confirmed_email', 'zipcode')
+        fields = ('confirmed_email', 'zipcode', 'interests')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     api_key = serializers.Field(source='api_key')
@@ -30,8 +30,6 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name', 'permissions')
 
 # Views
-
-
 class UserList(generics.ListCreateAPIView):
     """
     API endpoint that represents a list of users.

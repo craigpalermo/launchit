@@ -19,16 +19,17 @@ def users_in_range(request):
     zips = get_zips_in_range(zipcode, range)
 
     # extract just the zipcode from query results
-    only_zips = []
+    zip_distances = {}
     for zip in zips:
-        only_zips.append(zip[0])
+        zip_distances[zip[0]] = zip[4] # store zip code w/ distance from current
 
     # get users in those zipcodes
-    users_in_range = UserProfile.objects.filter(zipcode__in=only_zips)
+    users_in_range = UserProfile.objects.filter(zipcode__in=zip_distances.keys())
     results = []
 
     for profile in users_in_range:
         serializer = api.user.UserSerializer(profile.user)
+        serializer.data['distance'] = zip_distances[profile.zipcode]
         results.append(serializer.data)
 
     return JSONResponse(results)

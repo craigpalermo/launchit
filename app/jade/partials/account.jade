@@ -1,0 +1,9 @@
+div(ng-show='user')
+  h1 {{ user.username }}
+  h3 {{ user.profile.zipcode }}
+  h3 My Interests
+  form(ng-submit='add_interest()')
+    input(type='text', ng-model='interest', placeholder='Add new interest')
+    button(type='submit') Add
+  ul
+    li(ng-repeat='interest in myInterests') {{ interest }}

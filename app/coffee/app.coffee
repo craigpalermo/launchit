@@ -1,14 +1,22 @@
 "use strict"
 App = angular.module("App", ["ngRoute"]).config([
-  "$routeProvider"
-  "$locationProvider"
-  ($routeProvider) ->
-    $routeProvider.when("/",
-        templateUrl: "/static/views/home.html",
-        controller:  "MainCtrl"
-    ).when("/register",
-        templateUrl: "/static/views/signup.html"
-    ).otherwise(redirectTo: "/")
+    "$routeProvider"
+    "$locationProvider"
+    ($routeProvider) ->
+        $routeProvider.when("/",
+            templateUrl: "/static/views/home.html",
+            controller:  "MainCtrl"
+        ).when("/account",
+            templateUrl: "/static/views/account.html",
+            controller: "AccountCtrl"
+        ).when("/register",
+            templateUrl: "/static/views/signup.html"
+        ).otherwise(redirectTo: "/")
+])
+
+App.config(['$httpProvider', ($httpProvider) ->
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken'
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken'
 ])
 
 App.directive "activeLink", [
