@@ -1,9 +1,13 @@
 //- Only show if logged in
 div(ng-show='user')
-  input.form-control(type='text', placeholder='What do you like to do?', ng-model='searchValues')
+  div.col-sm-9
+    input.form-control(type='text', placeholder='What do you like to do? (separate interests with spaces)', ng-model='searchValues')
+  div.col-sm-3
+    select.form-control(ng-model='distance', ng-options='o as o for o in [1,5,10,20]')
+      option(value='') Distance (miles)
 
   table.table
-    tr(ng-repeat="user in users | interestFilter:searchValues:'AND'") 
+    tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | distanceFilter:distance") 
       td
         .row
           div.col-md-2.thumbnail

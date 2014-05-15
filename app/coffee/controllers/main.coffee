@@ -24,10 +24,18 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
           return
         )
 
-    # Filters
-    $scope.maxDistance = 10
-    $scope.distanceFilter = (distance) ->
-        return parseFloat(distance, 10) <= $scope.maxDistance
+App.filter "distanceFilter", ->
+    (input, distance) ->
+        if not distance
+            return input
+        else
+            returnArray = []
+            x = 0
+            while x < input.length
+                if input[x].distance <= parseFloat(distance)
+                    returnArray.push(input[x])
+                x++
+            return returnArray
 
 App.filter "interestFilter", ->
     (input, searchText, AND_OR) ->
