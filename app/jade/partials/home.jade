@@ -1,9 +1,9 @@
 //- Only show if logged in
 div(ng-show='user')
-  input.form-control(type='text', placeholder='What do you like to do?', ng-model='interestFilter')
+  input.form-control(type='text', placeholder='What do you like to do?', ng-model='searchValues')
 
   table.table
-    tr(ng-repeat="user in users | filter:{profile:interestFilter}") 
+    tr(ng-repeat="user in users | interestFilter:searchValues:'AND'") 
       td
         .row
           div.col-md-2.thumbnail
