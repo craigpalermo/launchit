@@ -22,7 +22,6 @@ App.controller "LoginCtrl", ($scope, $http, $location, $rootScope, $cookieStore)
                   $httpProvider.defaults.headers.common["Authorization"] = "Token " + user.api_key
             ]
             $cookieStore.put('api_key', user.api_key)
-            $cookieStore.put('bla', 'bla')
             $location.path "/"
             return
         )

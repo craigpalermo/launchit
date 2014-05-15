@@ -19,15 +19,26 @@ App.config(['$httpProvider', ($httpProvider, $cookieStore) ->
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken'
 ])
 
-App.run(['$cookieStore', ($cookieStore) ->
-    # log user in if api_cookie present
+App.run(['$cookieStore', '$http', '$rootScope', ($cookieStore, $http, $rootScope) ->
+    # log user in if api_key cookie is present
     api_key = $cookieStore.get('api_key')
-    if api_key and not user
+    if api_key and not $rootScope.user
         App.config ["$httpProvider",
             ($httpProvider) ->
-              $httpProvider.defaults.headers.common["Authorization"] = "Token " + api_key 
+              $httpProvider.defaults.headers.common["Authorization"] = "Token " + api_key
         ]
+        response = $http.post('/api/login', { api_key: api_key })
+        response.success((user, status) ->
+            $rootScope.user = user
+        )
 ])
+
+App.controller "IndexCtrl", ($scope, $rootScope, $location, $cookieStore) ->
+    # call this function to logout
+    $scope.logout = ->
+        $cookieStore.remove('api_key')
+        $rootScope.user = null
+        $location.path "/logout"
 
 App.directive "activeLink", [
   "$location"

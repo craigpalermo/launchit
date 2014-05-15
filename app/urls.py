@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.views.generic import RedirectView
 from rest_framework.renderers import JSONRenderer
+from rest_framework.authtoken.models import Token
 from django.conf import settings
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.db import IntegrityError
 from models.user_profile import UserProfile
 from util.zipcode import zips_view, users_in_range
@@ -34,6 +35,7 @@ def index(request):
     })
 
 @csrf_exempt
+@ensure_csrf_cookie
 def register(request):
     data = json.loads(request.body)
     result = {}
@@ -76,6 +78,7 @@ def register(request):
     response.status_code = 409
     return response
 
+@ensure_csrf_cookie
 def auth(request):
     data = {}
 
@@ -99,6 +102,15 @@ def auth(request):
     response.status_code = 401
     return response
 
+@csrf_exempt
+def api_login(request):
+    data = {}
+    body = json.loads(request.body)
+    if body['api_key']:
+        user = Token.objects.get(key=body['api_key']).user
+        serializer = api.user.UserSerializer(user)
+        return JSONResponse(serializer.data)
+    return JSONResponse([]) 
 
 def vlogout(request):
     logout(request)
@@ -112,6 +124,7 @@ urlpatterns = patterns('',
 
     url(r'^zips', zips_view),
     url(r'^api/users_in_range', users_in_range),
+    url(r'^api/login', api_login),
 
     # log in, log out routes.
     url(r'^auth/?', auth, name='auth'),

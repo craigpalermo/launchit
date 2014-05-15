@@ -41,8 +41,8 @@ html.no-js(ng-app="App")
               //- Only show when logged in
               li(ng-show="user")
                 a(href='#/account') My Account
-              li(ng-show="user")
-                a(href='logout/') Sign Out
+              li(ng-show="user", ng-controller='IndexCtrl')
+                a(ng-click='logout()') Sign Out
           div.col-md-10
             div.view-frame(ng-view)
 
