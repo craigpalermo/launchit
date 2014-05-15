@@ -1,0 +1,17 @@
+Things To Do - updated 5/14
+===============================================================================
+
+General:
+    - persistent login
+    - add user profile pics
+
+Home Page:
+    - add filter to restrict users shown by specific interests
+    - make sure it sorts users by distance
+    - make boxes for users look nice
+
+Registration Page:
+    - form validation for registration
+
+Account Page:
+    - add autocomplete to interests form using existing interests in database
