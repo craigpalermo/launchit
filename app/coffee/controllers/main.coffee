@@ -24,4 +24,9 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
           return
         )
 
+    # Filters
+    $scope.maxDistance = 10
+    $scope.distanceFilter = (distance) ->
+        return parseFloat(distance, 10) <= $scope.maxDistance
+
 return

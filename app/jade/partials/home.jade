@@ -1,8 +1,22 @@
-div
-  div(ng-repeat="user in users") 
+//- Only show if logged in
+div(ng-show='user')
+  input(type='text', placeholder='What do you like to do?', ng-model='interestFilter')
+
+  div(ng-repeat="user in users | filter:{profile:interestFilter}") 
     ul
       li Username: {{ user.username }} 
       li Zipcode: {{ user.profile.zipcode }} 
       li Distance: {{ user.distance }}
       ul
         li(ng-repeat="interest in user.profile.interests") {{ interest }}
+
+//- Only show if logged out
+div(ng-hide='user')
+  h1 Find a friend, launch an idea.
+  h2 
+    | Search for people in your area who are interested in the same types of
+    | projects as you.
+  h2
+    | Create an account to get started.
+  h2
+    a(href='#/register/') Sign Up
