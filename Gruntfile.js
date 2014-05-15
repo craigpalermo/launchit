@@ -2,6 +2,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-jade');
+    grunt.loadNpmTasks('grunt-contrib-stylus');
     grunt.loadNpmTasks('grunt-shell');
 
     grunt.initConfig({
@@ -16,7 +17,8 @@ module.exports = function(grunt) {
                         'app/static/js/*',
                         'app/static/partials/*',
                         'app/templates/*',
-                        'app/coffee/*'
+                        'app/coffee/*',
+                        'app/stylus/*'
                        ],
                 options: { livereload: true },
             },
@@ -27,6 +29,10 @@ module.exports = function(grunt) {
             jade: {
                 files: ['app/jade/**/*.jade'],
                 tasks: ['jade:compile']
+            },
+            stylus: {
+                files: ['app/stylus/**/*.styl'],
+                tasks: ['stylus:compile']
             }
         },
         coffee: {
@@ -59,6 +65,17 @@ module.exports = function(grunt) {
                     src: ['index.jade'],
                     dest: 'app/templates',
                     ext: '.html'
+                }]
+            }
+        },
+        stylus: {
+            compile: {
+                files: [{
+                    expand: true,
+                    cwd: "app/stylus/",
+                    src: ['**/*.styl'],
+                    dest: 'app/static/css',
+                    ext: '.css'
                 }]
             }
         }
