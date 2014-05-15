@@ -5,7 +5,7 @@
   "dependencies": {
     "angular": "*",
     "angular-route": "*",
-    "angular-cookies": "*",
+    "angular-cookies": "~1.2.16",
     "bootstrap": "*",
     "jquery": "*",
     "jquery-ui": "*",

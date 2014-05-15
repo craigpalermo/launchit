@@ -16,6 +16,13 @@ def users_in_range(request):
     range = 10
     data = json.loads(request.body)
     zipcode = data['zipcode']
+
+    if not zipcode:
+        # missing zipcode or other input, return nothing
+        response = JSONResponse()
+        response.status_code = 409
+        return response
+    
     zips = get_zips_in_range(zipcode, range)
 
     # extract just the zipcode from query results

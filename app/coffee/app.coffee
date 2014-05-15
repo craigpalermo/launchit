@@ -1,5 +1,5 @@
 "use strict"
-App = angular.module("App", ["ngRoute"]).config([
+App = angular.module('App', ['ngRoute', 'ngCookies']).config([
     "$routeProvider"
     "$locationProvider"
     ($routeProvider) ->
@@ -14,9 +14,19 @@ App = angular.module("App", ["ngRoute"]).config([
         ).otherwise(redirectTo: "/")
 ])
 
-App.config(['$httpProvider', ($httpProvider) ->
+App.config(['$httpProvider', ($httpProvider, $cookieStore) ->
     $httpProvider.defaults.xsrfCookieName = 'csrftoken'
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken'
+])
+
+App.run(['$cookieStore', ($cookieStore) ->
+    # log user in if api_cookie present
+    api_key = $cookieStore.get('api_key')
+    if api_key and not user
+        App.config ["$httpProvider",
+            ($httpProvider) ->
+              $httpProvider.defaults.headers.common["Authorization"] = "Token " + api_key 
+        ]
 ])
 
 App.directive "activeLink", [

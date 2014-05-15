@@ -1,14 +1,21 @@
 //- Only show if logged in
 div(ng-show='user')
-  input(type='text', placeholder='What do you like to do?', ng-model='interestFilter')
+  input.form-control(type='text', placeholder='What do you like to do?', ng-model='interestFilter')
 
-  div(ng-repeat="user in users | filter:{profile:interestFilter}") 
-    ul
-      li Username: {{ user.username }} 
-      li Zipcode: {{ user.profile.zipcode }} 
-      li Distance: {{ user.distance }}
-      ul
-        li(ng-repeat="interest in user.profile.interests") {{ interest }}
+  table.table
+    tr(ng-repeat="user in users | filter:{profile:interestFilter}") 
+      td
+        .row
+          div.col-md-2.thumbnail
+            img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/800px-Smiley.svg.png')
+          div.col-md-4
+            h3 {{ user.username }} 
+            h4 ZIP: {{ user.profile.zipcode }} 
+            h4 Distance: {{ user.distance | number:2 }} miles
+          div.col-md-6
+            h4 Interests:
+            ul
+              li(ng-repeat="interest in user.profile.interests") {{ interest }}
 
 //- Only show if logged out
 div(ng-hide='user')

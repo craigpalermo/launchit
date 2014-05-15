@@ -2,7 +2,7 @@
 
 App = angular.module('App')
 
-App.controller "LoginCtrl", ($scope, $http, $location, $rootScope) ->
+App.controller "LoginCtrl", ($scope, $http, $location, $rootScope, $cookieStore) ->
     # Login Form
     $scope.login = ->
         $scope.error = false
@@ -21,6 +21,8 @@ App.controller "LoginCtrl", ($scope, $http, $location, $rootScope) ->
                 ($httpProvider) ->
                   $httpProvider.defaults.headers.common["Authorization"] = "Token " + user.api_key
             ]
+            $cookieStore.put('api_key', user.api_key)
+            $cookieStore.put('bla', 'bla')
             $location.path "/"
             return
         )
