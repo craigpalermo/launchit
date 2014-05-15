@@ -1,11 +1,13 @@
 from django.contrib.auth.models import User, Group, Permission
-from app.models import UserProfile
+from app.models import UserProfile, Interest
 from rest_framework import serializers
 from rest_framework import generics
 
 
 # Serializers
 class UserProfileSerializer(serializers.ModelSerializer):
+    interests = serializers.RelatedField(many=True)
+    
     class Meta:
         model = UserProfile
         fields = ('confirmed_email', 'zipcode', 'interests')

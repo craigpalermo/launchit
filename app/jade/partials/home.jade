@@ -1,3 +1,8 @@
 div
-  ul
-    li(ng-repeat="user in users") {{ user.username }} {{ user.profile.zipcode }} {{ user.distance }}
+  div(ng-repeat="user in users") 
+    ul
+      li Username: {{ user.username }} 
+      li Zipcode: {{ user.profile.zipcode }} 
+      li Distance: {{ user.distance }}
+      ul
+        li(ng-repeat="interest in user.profile.interests") {{ interest }}

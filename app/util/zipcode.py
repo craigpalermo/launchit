@@ -24,7 +24,7 @@ def users_in_range(request):
         zip_distances[zip[0]] = zip[4] # store zip code w/ distance from current
 
     # get users in those zipcodes
-    users_in_range = UserProfile.objects.filter(zipcode__in=zip_distances.keys())
+    users_in_range = UserProfile.objects.filter(zipcode__in=zip_distances.keys()).exclude(user=request.user)
     results = []
 
     for profile in users_in_range:
