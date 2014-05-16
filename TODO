@@ -7,8 +7,8 @@ X    - persistent login
     - add live updated list of popular interests below navbar
 
 Home Page:
-    - add filter to restrict users shown by specific interests
-    - make sure it sorts users by distance
+X    - add filter to restrict users shown by specific interests
+X    - make sure it sorts users by distance
     - make boxes for users look nice
 
 Registration Page:
@@ -16,3 +16,10 @@ Registration Page:
 
 Account Page:
     - add autocomplete to interests form using existing interests in database
+
+Groups
+    - let people create groups
+    - groups should let people easily move to groupme, github, etc.
+    
+Messages
+    - let users message each other, check out https://github.com/arneb/django-messages
