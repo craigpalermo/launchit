@@ -6,7 +6,15 @@ div(ng-show='user')
     select.form-control(ng-model='distance', ng-options='o as o for o in [1,5,10,20]')
       option(value='') Distance (miles)
 
-  table.table
+  div(ng-show='empty')
+    h1 There doesn't seem to be anyone around you. Is your zipcode valid?
+
+  div(ng-show='error')
+    h2 Oops, we ran into a problem while getting your data... 
+    h3 Is your zipcode valid?
+    h3 Zipcode: {{ user.profile.zipcode }}
+
+  table.table(ng-hide='empty')
     tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | distanceFilter:distance") 
       td
         .row

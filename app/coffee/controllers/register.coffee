@@ -16,10 +16,15 @@ App.controller "RegistrationCtrl", ($scope, $http, $location, $rootScope) ->
         }
 
         # validate form fields
-        if $scope.password isnt $scope.confPassword
+        if not $scope.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+            $scope.message = "Please enter a valid email address."
+            $scope.error = true
+        else if $scope.password isnt $scope.confPassword
             $scope.message = "The passwords you entered don't match."
-        else if not "#{$scope.zipcode}".match(/([0-9]){5}/)
+            $scope.error = true
+        else if not $scope.zipcode.match(/([0-9]){5}/)
             $scope.message = "Please enter a valid ZIP code."
+            $scope.error = true
         else
             # send data to server
             response = $http.post("/register", data)
@@ -37,9 +42,9 @@ App.controller "RegistrationCtrl", ($scope, $http, $location, $rootScope) ->
             
             # response was error
             response.error((data, status) ->
+              $scope.message = data["message"]
               $scope.error = true
               $scope.loading = false
-              $scope.message = data["message"]
               return
             )
 

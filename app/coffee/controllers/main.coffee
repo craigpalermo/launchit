@@ -14,6 +14,7 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
         # response was success
         response.success((data, status) ->
             $scope.users = data
+            $scope.empty = if data.length then false else true
             return
         )
         
@@ -21,6 +22,7 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
         response.error((data, status) ->
           $scope.error = true
           $scope.loading = false
+          $scope.error = true
           return
         )
 
