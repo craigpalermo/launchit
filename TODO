@@ -12,10 +12,11 @@ X    - make sure it sorts users by distance
     - make boxes for users look nice
 
 Registration Page:
-    - form validation for registration
+X    - form validation for registration
 
 Account Page:
     - add autocomplete to interests form using existing interests in database
+    - fix broken bootstrap font link
 
 Groups
     - let people create groups
