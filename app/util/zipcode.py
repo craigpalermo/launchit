@@ -23,7 +23,13 @@ def users_in_range(request):
         response.status_code = 409
         return response
     
-    zips = get_zips_in_range(zipcode, range)
+    try:
+        zips = get_zips_in_range(zipcode, range)
+    except:
+        data = {'status': 'error', 'message': 'Error getting zipcodes in range.'}
+        response = JSONResponse(data)
+        response.status_code = 409
+        return response
 
     # extract just the zipcode from query results
     zip_distances = {}

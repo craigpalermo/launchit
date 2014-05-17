@@ -26,8 +26,9 @@ div(ng-show='user')
             h4 Distance: {{ user.distance | number:2 }} miles
           div.col-md-6
             h4 Interests:
-            ul
+            ul(ng-show="user.profile.interests")
               li(ng-repeat="interest in user.profile.interests") {{ interest }}
+            p(ng-hide="user.profile.interests") None
 
 //- Only show if logged out
 div(ng-hide='user')

@@ -18,5 +18,5 @@ div(ng-show='user')
           tr(ng-repeat='interest in myInterests')
             td {{ interest }}
             td
-              a(href='#')
+              a(ng-click='remove_interest(interest)')
                 span.glyphicon.glyphicon-remove
