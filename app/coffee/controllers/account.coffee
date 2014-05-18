@@ -6,8 +6,8 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
     $scope.myInterests = $rootScope.user.profile.interests
 
     # forward click on image to file upload field
-    $('#profPic').on('click', ->
-        $('#imageField').click()
+    $('#profPicContainer .text-content, img').on('click', ->
+        $("#file").click()
     )
 
     # set image link for profile picture
@@ -44,4 +44,5 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
                 $rootScope.user = data
                 $scope.profPic = '/media/' + data.profile.avatar
             )
+
 return

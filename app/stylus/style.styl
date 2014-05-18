@@ -1,2 +1,27 @@
 // Imports
 @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css")
+
+// Account Page
+#profPicContainer
+    text-align center
+    display inline-block
+    position relative
+    cursor pointer
+span.text-content
+    background rgba(0,0,0,0.5)
+    color white
+    display table
+    position absolute
+    left 0
+    bottom 0
+    right -1rem
+    width 80%
+    height 50px
+    opacity 0
+    transition opacity 0.4s ease-in-out
+#profPicContainer:hover span.text-content
+    opacity 1
+span.text-content span
+    display table-cell
+    text-align center
+    vertical-align middle

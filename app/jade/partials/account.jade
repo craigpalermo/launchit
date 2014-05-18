@@ -1,8 +1,10 @@
 div(ng-show='user')
   .row
-    div.col-md-2.thumbnail
-      input#imageField.hidden(type='file', ng-file-select="onFileSelect($files)")
-      img#profPic(src='{{ profPic }}')
+    div.col-md-2.thumbnail#profPicContainer
+      img(src='{{ profPic }}')
+      span.text-content
+        span Update profile picture
+      input#file.hidden(type='file', ng-file-select="onFileSelect($files)")
     div.col-md-10
       h1 {{ user.username }}
       h3 ZIP: {{ user.profile.zipcode }}
