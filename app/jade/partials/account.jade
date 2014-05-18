@@ -1,23 +1,29 @@
 div(ng-show='user')
   .row
-    div.col-md-2.thumbnail#profPicContainer
+    div.col-sm-2.thumbnail#profPicContainer
       img(src='{{ profPic }}')
       span.text-content
         span Update profile picture
       input#file.hidden(type='file', ng-file-select="onFileSelect($files)")
-    div.col-md-10
+    div.col-sm-10
       h1 {{ user.username }}
-      h3 ZIP: {{ user.profile.zipcode }}
+      table.profileTable
+        tr
+          td ZIP code
+          td {{ user.profile.zipcode }}
 
   .row
-    div.col-md-12
-      h3 My Interests
-      form(ng-submit='add_interest()')
-        div.input-group.col-md-6
-          input.form-control(type='text', ng-model='interest', placeholder='Add new interest')
-          span.input-group-btn
-            button.btn.btn-default(type='submit') Add
-      div.col-md-6
+    div.col-sm-12
+      div.input-group.col-sm-8
+        h3 My Interests
+        form(ng-submit='add_interest()')
+          div.input-group
+            input.form-control(type='text', ng-model='interest', placeholder='Add new interest')
+            span.input-group-btn
+              button.btn.btn-default(type='submit') Add
+      div.col-sm-8(ng-hide='myInterests.length')
+        p.bg-info Add some interests so other users can see what you like to do!
+      div.col-sm-8(ng-show='myInterests.length')
         table.table
           tr(ng-repeat='interest in myInterests')
             td {{ interest }}

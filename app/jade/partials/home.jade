@@ -1,44 +1,50 @@
 //- Only show if logged in
-div(ng-show='user')
-  .row
-    div.col-sm-9
-      input.form-control(type='text', placeholder='What do you like to do? (separate interests with spaces)', ng-model='searchValues')
-    div.col-sm-3
-      select.form-control(ng-model='distance', ng-options='o as o for o in [1,5,10,20]')
-        option(value='') Distance (miles)
+.row
+  div.col-sm-12(ng-show='user')
+    .row#searchBar
+      div.col-sm-9
+        input.form-control(type='text', placeholder='What do you like to do? (separate interests with spaces)', ng-model='searchValues')
+      div.col-sm-3
+        select.form-control(ng-model='distance', ng-options='o as o for o in [1,5,10,20]')
+          option(value='') Distance (miles)
 
-  .row
-    div.col-sm-12.alert.alert-warning(ng-show='empty')
-      p There doesn't seem to be anyone around you. Is your zipcode valid?
+    .row
+      div.col-sm-12.alert.alert-warning(ng-show='empty')
+        p There doesn't seem to be anyone around you. Is your zipcode valid?
 
-    div.col-sm-12.alert.alert-danger(ng-show='error')
-      p Oops, we ran into a problem while getting your data... 
-      p Is your zipcode valid?
-      p Zipcode: {{ user.profile.zipcode }}
+      div.col-sm-12.alert.alert-danger(ng-show='error')
+        p Oops, we ran into a problem while getting your data... 
+        p Is your zipcode valid?
+        p Zipcode: {{ user.profile.zipcode }}
 
-  table.table(ng-hide='empty')
-    tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | distanceFilter:distance") 
-      td
-        .row
-          div.col-md-2.thumbnail
-            img(src='/media/{{user.profile.avatar}}')
-          div.col-md-4
-            h3 {{ user.username }} 
-            h4 ZIP: {{ user.profile.zipcode }} 
-            h4 Distance: {{ user.distance | number:2 }} miles
-          div.col-md-6
-            h4 Interests:
-            ul(ng-show="user.profile.interests")
-              li(ng-repeat="interest in user.profile.interests") {{ interest }}
-            p(ng-hide="user.profile.interests") None
+    table.table(ng-hide='empty')
+      tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | distanceFilter:distance") 
+        td
+          .row
+            div.col-md-2.thumbnail
+              img(src='/media/{{user.profile.avatar}}')
+            div.col-md-4
+              h3 {{ user.username }} 
+              table.profileTable
+                tr
+                  td ZIP code
+                  td {{ user.profile.zipcode }} 
+                tr
+                  td Distance
+                  td {{ user.distance | number:2 }} miles
+            div.col-md-6
+              h4 Interests:
+              ul(ng-show="user.profile.interests")
+                li(ng-repeat="interest in user.profile.interests") {{ interest }}
+              p(ng-hide="user.profile.interests") None
 
-//- Only show if logged out
-div(ng-hide='user')
-  h1 Find a friend, launch an idea.
-  h2 
-    | Search for people in your area who are interested in the same types of
-    | projects as you.
-  h2
-    | Create an account to get started.
-  h2
-    a(href='#/register/') Sign Up
+  //- Only show if logged out
+  div(ng-hide='user')
+    h1 Find a friend, launch an idea.
+    h2 
+      | Search for people in your area who are interested in the same types of
+      | projects as you.
+    h2
+      | Create an account to get started.
+    h2
+      a(href='#/register/') Sign Up
