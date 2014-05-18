@@ -5,9 +5,15 @@ from app.api.user import UserList, UserDetail, GroupList, GroupDetail
 from app.util.JSONResponse import JSONResponse
 from app.models.interest import Interest
 from app.models.user_profile import UserProfile
+from app.settings import base as settings
+from app.api import user
 import json
 
 def add_interest(request):
+    '''
+    Add a new interest to the user's list of interests. If the interest
+    doesn't already exist, first add a new interest object to the database.
+    '''
     data = json.loads(request.body)
 
     try:
@@ -31,6 +37,9 @@ def add_interest(request):
     return response
 
 def remove_interest(request):
+    '''
+    Remove an interest from the user's list of interests.
+    '''
     data = json.loads(request.body)
 
     try:
@@ -44,10 +53,6 @@ def remove_interest(request):
                 }
         response = JSONResponse(json.dumps(data))
     except:
-        interest = Interest.objects.get(name=data['interest'].lower())
-        profile = UserProfile.objects.get(user=request.user)
-        profile.interests.remove(interest)
-        profile.save()
         data = {
                 'result': 'error',
                 'message': 'There was an error processing your request.'
@@ -56,6 +61,17 @@ def remove_interest(request):
         response.status_code = 409
 
     return response
+
+def update_avatar(request):
+    profile = UserProfile.objects.get(user=request.user)
+    profile.avatar = request.FILES['file']
+    profile.save()
+
+    data = {'result': 'success',
+            'path': str(profile.avatar)}
+    serializer = user.UserSerializer(request.user)
+    return JSONResponse(serializer.data)
+
 
 urlpatterns = patterns('',
     url(r'^/users/?$', UserList.as_view(), name='user-list'),
@@ -67,10 +83,11 @@ urlpatterns = patterns('',
 # Format suffixes
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'api'])
 
-# Default login/logout views
 urlpatterns += patterns('',
     url(r'^/api-auth/', include(
         'rest_framework.urls', namespace='rest_framework')),
     url(r'^/add_interest/', add_interest),
-    url(r'^/remove_interest/', remove_interest)
+    url(r'^/remove_interest/', remove_interest),
+    url(r'^/change_avatar/', update_avatar)
 )
+

@@ -1,10 +1,12 @@
 div(ng-show='user')
   .row
     div.col-md-2.thumbnail
-      img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/800px-Smiley.svg.png')
+      input#imageField.hidden(type='file', ng-file-select="onFileSelect($files)")
+      img#profPic(src='{{ profPic }}')
     div.col-md-10
       h1 {{ user.username }}
       h3 ZIP: {{ user.profile.zipcode }}
+
   .row
     div.col-md-12
       h3 My Interests

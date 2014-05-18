@@ -1,5 +1,5 @@
 "use strict"
-App = angular.module('App', ['ngRoute', 'ngCookies']).config([
+App = angular.module('App', ['ngRoute', 'ngCookies', 'angularFileUpload']).config([
     "$routeProvider"
     "$locationProvider"
     ($routeProvider) ->

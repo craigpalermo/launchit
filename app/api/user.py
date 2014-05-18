@@ -10,7 +10,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = UserProfile
-        fields = ('confirmed_email', 'zipcode', 'interests')
+        fields = ('confirmed_email', 'avatar', 'zipcode', 'interests')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     api_key = serializers.Field(source='api_key')

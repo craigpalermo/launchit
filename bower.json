@@ -10,7 +10,8 @@
     "jquery": "*",
     "jquery-ui": "*",
     "flat-ui-official": "*",
-    "parsleyjs": "~2.0.0"
+    "parsleyjs": "~2.0.0",
+    "ng-file-upload": "~1.4.0"
   },
   "install": {
     "path": "app/static/vendor"

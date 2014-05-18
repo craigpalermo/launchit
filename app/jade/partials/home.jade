@@ -1,25 +1,27 @@
 //- Only show if logged in
 div(ng-show='user')
-  div.col-sm-9
-    input.form-control(type='text', placeholder='What do you like to do? (separate interests with spaces)', ng-model='searchValues')
-  div.col-sm-3
-    select.form-control(ng-model='distance', ng-options='o as o for o in [1,5,10,20]')
-      option(value='') Distance (miles)
+  .row
+    div.col-sm-9
+      input.form-control(type='text', placeholder='What do you like to do? (separate interests with spaces)', ng-model='searchValues')
+    div.col-sm-3
+      select.form-control(ng-model='distance', ng-options='o as o for o in [1,5,10,20]')
+        option(value='') Distance (miles)
 
-  div(ng-show='empty')
-    h1 There doesn't seem to be anyone around you. Is your zipcode valid?
+  .row
+    div.col-sm-12.alert.alert-warning(ng-show='empty')
+      p There doesn't seem to be anyone around you. Is your zipcode valid?
 
-  div(ng-show='error')
-    h2 Oops, we ran into a problem while getting your data... 
-    h3 Is your zipcode valid?
-    h3 Zipcode: {{ user.profile.zipcode }}
+    div.col-sm-12.alert.alert-danger(ng-show='error')
+      p Oops, we ran into a problem while getting your data... 
+      p Is your zipcode valid?
+      p Zipcode: {{ user.profile.zipcode }}
 
   table.table(ng-hide='empty')
     tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | distanceFilter:distance") 
       td
         .row
           div.col-md-2.thumbnail
-            img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Smiley.svg/800px-Smiley.svg.png')
+            img(src='/media/{{user.profile.avatar}}')
           div.col-md-4
             h3 {{ user.username }} 
             h4 ZIP: {{ user.profile.zipcode }} 

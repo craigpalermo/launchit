@@ -6,6 +6,7 @@ from interest import Interest
 
 class UserProfile(Model):
     user = models.ForeignKey(User, unique=True)
+    avatar = models.FileField(upload_to='images/')
     zipcode = models.CharField(max_length=5)
     confirmed_email = models.BooleanField(default=False)
     interests = models.ManyToManyField(Interest)

@@ -3,6 +3,10 @@
 App = angular.module("App")
 
 App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
+    # set flags for the home page
+    $scope.error = false
+    $scope.empty = false
+
     if $rootScope.user
         data = {
             zipcode:  $rootScope.user.profile.zipcode
@@ -22,7 +26,6 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
         response.error((data, status) ->
           $scope.error = true
           $scope.loading = false
-          $scope.error = true
           return
         )
 

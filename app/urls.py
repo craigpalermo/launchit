@@ -131,6 +131,12 @@ urlpatterns = patterns('',
     url(r'^logout/?', vlogout, name='logout'),
     url(r'^register/?', register, name='register'),
 
-    # Catch all, for history API routing
+   # Catch all, for history API routing
     url(r'^/?$', index, name='index')
 )
+
+if settings.DEBUG :
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    )
+
