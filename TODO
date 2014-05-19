@@ -9,7 +9,7 @@ X    - add user profile pics
 Home Page:
 X    - add filter to restrict users shown by specific interests
 X    - make sure it sorts users by distance
-    - make boxes for users look nice
+X    - make boxes for users look nice
 
 Registration Page:
 X    - form validation for registration
