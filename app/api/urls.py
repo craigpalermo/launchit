@@ -8,7 +8,12 @@ from app.models.interest import Interest
 from app.models.user_profile import UserProfile
 from app.settings import base as settings
 from app.api import user
-import json
+
+import traceback, sys, json
+
+# define result constants
+SUCCESS = 'success'
+ERROR = 'error'
 
 def add_interest(request):
     '''
@@ -22,20 +27,17 @@ def add_interest(request):
         profile = UserProfile.objects.get(user=request.user)
         profile.interests.add(interest)
         profile.save()
-        data = {
-                'result': 'success',
-                'message': ''
-                }
-        response = JSONResponse(json.dumps(data))
+        data = { 'result': SUCCESS,
+                 'message': ''}
+        response = JSONResponse(data)
     except:
-        data = {
-                'result': 'error',
-                'message': 'There was a problem adding an interest to your profile.'
-                }
-        response = JSONResponse(json.dumps(data))
+        data = { 'result': ERROR,
+                 'message': 'There was a problem adding an interest to your profile.'}
+        response = JSONResponse(data)
         response.status_code = 409
 
     return response
+
 
 def remove_interest(request):
     '''
@@ -48,41 +50,64 @@ def remove_interest(request):
         profile = UserProfile.objects.get(user=request.user)
         profile.interests.remove(interest)
         profile.save()
-        data = {
-                'result': 'success',
-                'message': ''
-                }
-        response = JSONResponse(json.dumps(data))
+        data = { 'result': SUCCESS,
+                 'message': '' }
+        response = JSONResponse(data)
     except:
-        data = {
-                'result': 'error',
-                'message': 'There was an error processing your request.'
-                }
-        response = JSONResponse(json.dumps(data))
+        data = { 'result': ERROR,
+                 'message': 'There was an error processing your request.' }
+        response = JSONResponse(data)
         response.status_code = 409
 
     return response
+
 
 def fetch_interests(request):
     '''
     Returns a list of all interests currently in the database
     '''
-    cursor = connection.cursor()
-    sql = "SELECT name FROM app_interest ORDER BY name"
-    cursor.execute(sql, [])
-    interests = [item[0] for item in cursor.fetchall()]
-    return JSONResponse(interests)
+    try:
+        cursor = connection.cursor()
+        sql = "SELECT name FROM app_interest ORDER BY name"
+        cursor.execute(sql, [])
+        interests = [item[0] for item in cursor.fetchall()]
+        data = { 'result': SUCCESS,
+                 'message': '',
+                 'data': interests }
+        response = JSONResponse(data)
+    except:
+        data = { 'result': ERROR,
+                 'message': 'There was an error processing your request.' }
+        response = JSONResponse(data)
+        response.status_code = 500
+
+    return response
+
 
 def update_avatar(request):
-    profile = UserProfile.objects.get(user=request.user)
-    profile.avatar = request.FILES['file']
-    profile.save()
+    '''
+    Update the user's profile picture
+    '''
+    try:
+        if request.method == 'POST':
+            profile = UserProfile.objects.get(user=request.user)
+            profile.avatar = request.FILES['file']
+            profile.save()
 
-    data = {'result': 'success',
-            'path': str(profile.avatar)}
-    serializer = user.UserSerializer(request.user)
-    return JSONResponse(serializer.data)
+            serializer = user.UserSerializer(request.user)
+            data = {'result': SUCCESS,
+                    'message': '',
+                    'user': serializer.data }
+            response = JSONResponse(data)
+        else:
+            raise
+    except:
+        data = {'result': ERROR,
+                'message': 'There was an error processing your request.'}
+        response = JSONResponse(data)
+        response.status_code = 500
 
+    return response
 
 urlpatterns = patterns('',
     url(r'^/users/?$', UserList.as_view(), name='user-list'),
@@ -94,9 +119,9 @@ urlpatterns = patterns('',
 # Format suffixes
 urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'api'])
 
+# API urls
 urlpatterns += patterns('',
-    url(r'^/api-auth/', include(
-        'rest_framework.urls', namespace='rest_framework')),
+    url(r'^/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^/add_interest/', add_interest),
     url(r'^/remove_interest/', remove_interest),
     url(r'^/change_avatar/', update_avatar),

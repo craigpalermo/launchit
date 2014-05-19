@@ -10,8 +10,8 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
         $("#file").click()
     )
 
-    $http.get('/api/fetch_interests').then((response) ->
-        $scope.interests = response.data
+    $http.get('/api/fetch_interests/').then((response) ->
+        $scope.interests = response.data.data
     )
 
     # set image link for profile picture
@@ -46,8 +46,8 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
                 url: '/api/change_avatar/',
                 file: file,
             }).success((data, status, headers, config) ->
-                $rootScope.user = data
-                $scope.profPic = '/media/' + data.profile.avatar
+                $rootScope.user = data.user
+                $scope.profPic = '/media/' + $rootScope.user.profile.avatar
             )
 
 return
