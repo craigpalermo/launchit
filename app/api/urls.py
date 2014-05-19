@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url, include
 from django.http import HttpResponse
+from django.db import connection
 from rest_framework.urlpatterns import format_suffix_patterns
 from app.api.user import UserList, UserDetail, GroupList, GroupDetail
 from app.util.JSONResponse import JSONResponse
@@ -62,6 +63,16 @@ def remove_interest(request):
 
     return response
 
+def fetch_interests(request):
+    '''
+    Returns a list of all interests currently in the database
+    '''
+    cursor = connection.cursor()
+    sql = "SELECT name FROM app_interest ORDER BY name"
+    cursor.execute(sql, [])
+    interests = [item[0] for item in cursor.fetchall()]
+    return JSONResponse(interests)
+
 def update_avatar(request):
     profile = UserProfile.objects.get(user=request.user)
     profile.avatar = request.FILES['file']
@@ -88,6 +99,7 @@ urlpatterns += patterns('',
         'rest_framework.urls', namespace='rest_framework')),
     url(r'^/add_interest/', add_interest),
     url(r'^/remove_interest/', remove_interest),
-    url(r'^/change_avatar/', update_avatar)
+    url(r'^/change_avatar/', update_avatar),
+    url(r'^/fetch_interests/', fetch_interests)
 )
 

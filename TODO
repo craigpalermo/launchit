@@ -3,7 +3,7 @@ Things To Do - updated 5/14
 
 General:
 X    - persistent login
-    - add user profile pics
+X    - add user profile pics
     - add live updated list of popular interests below navbar
 
 Home Page:
@@ -15,12 +15,13 @@ Registration Page:
 X    - form validation for registration
 
 Account Page:
-    - add autocomplete to interests form using existing interests in database
+X    - add autocomplete to interests form using existing interests in database
 X    - fix broken bootstrap font link
-    - implement ability to delete interests
+X    - implement ability to delete interests
+
 Groups
     - let people create groups
     - groups should let people easily move to groupme, github, etc.
-    
+
 Messages
     - let users message each other, check out https://github.com/arneb/django-messages

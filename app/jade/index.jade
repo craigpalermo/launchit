@@ -4,21 +4,27 @@ html.no-js(ng-app="App")
     meta(http-equiv="X-UA-Compatible", content="IE=edge,chome=1")
     meta(name="viewport", content="width=device-width")
 
+
+    //- Vendor scripts
+    script(type="text/javascript", src="/static/vendor/jquery/jquery.js")
+    script(type="text/javascript", src="/static/vendor/bootstrap/bootstrap.js")
+
     //- Angular scripts
     script(type="text/javascript", src="/static/vendor/angular/angular.js")
     script(type="text/javascript", src="/static/vendor/angular-route/angular-route.js")
     script(type="text/javascript", src="/static/vendor/angular-cookies/angular-cookies.js")
     script(type="text/javascript", src="/static/vendor/ng-file-upload/angular-file-upload.js")
     script(type="text/javascript", src="/static/js/app.js")
+    script(type="text/javascript", src="/static/vendor/angular-bootstrap/ui-bootstrap-tpls.js")
+
     //- Controllers
     script(type="text/javascript", src="/static/js/main.js")
     script(type="text/javascript", src="/static/js/register.js")
     script(type="text/javascript", src="/static/js/login.js")
     script(type="text/javascript", src="/static/js/account.js")
 
-    //- Other scripts
-    script(type="text/javascript", src="/static/vendor/jquery/jquery.js")
-    script(type="text/javascript", src="/static/vendor/bootstrap/bootstrap.js")
+    //- My scripts
+    script(type="text/javascript", src="/static/js/index.js")
 
     //- Stylesheets
     link(rel="stylesheet", href="/static/vendor/bootstrap/bootstrap.css")

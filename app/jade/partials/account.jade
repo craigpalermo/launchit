@@ -18,7 +18,7 @@ div(ng-show='user')
         h3 My Interests
         form(ng-submit='add_interest()')
           div.input-group
-            input.form-control(type='text', ng-model='interest', placeholder='Add new interest')
+            input.form-control(type='text', ng-model='selected', typeahead="interest for interest in interests | filter:$viewValue | limitTo:8", placeholder='Add new interest')
             span.input-group-btn
               button.btn.btn-default(type='submit') Add
       div.col-sm-8(ng-hide='myInterests.length')

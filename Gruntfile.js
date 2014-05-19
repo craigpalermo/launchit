@@ -41,7 +41,11 @@ module.exports = function(grunt) {
                     join: true
                 },
                 files: [{
-                    'app/static/js/app.js': ['app/coffee/app.coffee'],
+                    expand: true,
+                    cwd: "app/coffee/",
+                    src: ['**/*.coffee'],
+                    dest: 'app/static/js',
+                    ext: '.js'
                 },{
                     expand: true,
                     cwd: "app/coffee/controllers/",

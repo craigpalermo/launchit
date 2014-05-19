@@ -10,6 +10,10 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
         $("#file").click()
     )
 
+    $http.get('/api/fetch_interests').then((response) ->
+        $scope.interests = response.data
+    )
+
     # set image link for profile picture
     if $rootScope.user.profile.avatar isnt ''
         $scope.profPic = '/media/' + $rootScope.user.profile.avatar
@@ -18,11 +22,12 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
 
     # add interest to account
     $scope.add_interest = ->
-        data = { interest: $scope.interest }
+        data = { interest: $scope.selected }
         response = $http.post("/api/add_interest/", data)
         response.success((data, status) ->
-            $scope.myInterests.push($scope.interest)
-            $scope.interest = ''
+            if $scope.selected not in $scope.myInterests
+                $scope.myInterests.push($scope.selected)
+                $scope.selected = ''
         )
         
     # remove interest from account
