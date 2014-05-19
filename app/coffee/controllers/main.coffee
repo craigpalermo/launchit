@@ -29,6 +29,10 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
           return
         )
 
+    # change route to signup page
+    $scope.goRegister = ->
+        $location.path('/register')
+
 App.filter "distanceFilter", ->
     (input, distance) ->
         if not distance

@@ -32,19 +32,18 @@
                 tr
                   td Distance
                   td {{ user.distance | number:2 }} miles
-            div.col-md-6
-              h4 Interests:
-              ul(ng-show="user.profile.interests")
-                li(ng-repeat="interest in user.profile.interests") {{ interest }}
-              p(ng-hide="user.profile.interests") None
+            div.col-md-5
+              .row-fluid.interest-wrapper
+                h4 Interests:
+                div(ng-show="user.profile.interests")
+                  div.interest.label.label-primary(ng-repeat="interest in user.profile.interests") {{ interest }}
+                p(ng-hide="user.profile.interests") None
 
   //- Only show if logged out
-  div(ng-hide='user')
+  div.jumbotron(ng-hide='user')
     h1 Find a friend, launch an idea.
     h2 
       | Search for people in your area who are interested in the same types of
       | projects as you.
-    h2
-      | Create an account to get started.
-    h2
-      a(href='#/register/') Sign Up
+    br
+    button.btn.btn-success.btn-lg(ng-click='goRegister()') Create an account to get started.
