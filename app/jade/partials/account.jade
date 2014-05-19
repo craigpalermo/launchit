@@ -1,4 +1,8 @@
 div(ng-show='user')
+  .row(ng-show='error')
+    div.col-sm-12
+      p.alert.alert-warning {{ message }}
+
   .row
     div.col-sm-2.thumbnail#profPicContainer
       img(src='{{ profPic }}')

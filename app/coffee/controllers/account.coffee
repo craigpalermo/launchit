@@ -10,8 +10,15 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
         $("#file").click()
     )
 
-    $http.get('/api/fetch_interests/').then((response) ->
-        $scope.interests = response.data.data
+    # get interests from db for autocomplete
+    $http({
+        method: 'GET',
+        url: '/api/fetch_interests/'
+    }).success((data, status) ->
+        $scope.interests = data.data
+    ).error((data, status) ->
+        $scope.error = true
+        $scope.message = data.message
     )
 
     # set image link for profile picture
@@ -25,11 +32,15 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
         data = { interest: $scope.selected }
         response = $http.post("/api/add_interest/", data)
         response.success((data, status) ->
+            $scope.error = false
             if $scope.selected not in $scope.myInterests
                 $scope.myInterests.push($scope.selected)
                 $scope.selected = ''
+        ).error((data, status) ->
+            $scope.error = true
+            $scope.message = data.message
         )
-        
+
     # remove interest from account
     $scope.remove_interest = (interest) ->
         data = { interest: interest }
@@ -37,6 +48,9 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
         response.success((data, status) ->
             index = $scope.myInterests.indexOf interest
             $scope.myInterests.splice(index, 1) if index isnt -1
+        ).error((data, status) ->
+            $scope.error = true
+            $scope.message = data.message
         )
 
     # change account's profile picture
@@ -48,6 +62,10 @@ App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
             }).success((data, status, headers, config) ->
                 $rootScope.user = data.user
                 $scope.profPic = '/media/' + $rootScope.user.profile.avatar
+            ).error((data, status) ->
+                $scope.error = true
+                $scope.message = data.message
             )
+
 
 return

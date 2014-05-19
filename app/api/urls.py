@@ -55,7 +55,7 @@ def remove_interest(request):
         response = JSONResponse(data)
     except:
         data = { 'result': ERROR,
-                 'message': 'There was an error processing your request.' }
+                 'message': 'There was an error removing an interest from your profile.' }
         response = JSONResponse(data)
         response.status_code = 409
 
@@ -77,7 +77,7 @@ def fetch_interests(request):
         response = JSONResponse(data)
     except:
         data = { 'result': ERROR,
-                 'message': 'There was an error processing your request.' }
+                 'message': 'There was an error retrieving interests from the sever.' }
         response = JSONResponse(data)
         response.status_code = 500
 
