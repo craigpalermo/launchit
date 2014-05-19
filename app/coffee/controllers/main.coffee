@@ -33,6 +33,12 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
     $scope.goRegister = ->
         $location.path('/register')
 
+    $scope.matchMyInterests = ->
+        search = ""
+        for item in $rootScope.user.profile.interests
+            search += "#{item} "
+        $scope.searchValues = search
+
 App.filter "distanceFilter", ->
     (input, distance) ->
         if not distance

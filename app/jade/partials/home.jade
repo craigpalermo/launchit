@@ -3,7 +3,12 @@
   div.col-sm-12(ng-show='user')
     .row#searchBar
       div.col-sm-9
-        input.form-control(type='text', placeholder='What do you like to do? (separate interests with spaces)', ng-model='searchValues')
+        div.input-group
+          input.form-control(type='text', placeholder='What do you like to do? (separate interests with spaces)', ng-model='searchValues')
+          div.input-group-btn
+            button.btn.btn-default(ng-click="searchValues = ''") Clear
+            button.btn.btn-default(ng-click='matchMyInterests()', title='Narrow your search down to people who share all of your interests') I'm Feeling Lucky
+
       div.col-sm-3
         select.form-control(ng-model='distance', ng-options='o as o for o in [1,5,10,20]')
           option(value='') Distance (miles)
