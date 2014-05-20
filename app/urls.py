@@ -83,19 +83,28 @@ def auth(request):
     data = {}
     input = json.loads(request.body)
 
-    if request.method == 'POST':
-        print request.POST
-        uname = input.get('username')
-        passwd = input.get('password')
-        user = authenticate(username=uname, password=passwd)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                request.user = user
+    try:
+        if request.method == 'POST':
+            print request.POST
+            uname = input.get('username')
+            passwd = input.get('password')
+            user = authenticate(username=uname, password=passwd)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    request.user = user
 
-                # Once we have logged the user in return the serialized response
-                serializer = api.user.UserSerializer(request.user)
-                return JSONResponse(serializer.data)
+                    # Once we have logged the user in return the serialized response
+                    serializer = api.user.UserSerializer(request.user)
+                    return JSONResponse(serializer.data)
+    except:
+        data['result']  = "error"
+        data['message'] = "There was an error contacting the database."
+
+        # They did not provide basic authentication
+        response = JSONResponse(data)
+        response.status_code = 500
+        return response
 
     data['result']  = "error"
     data['message'] = "Incorrect username or password."
