@@ -23,7 +23,7 @@
         p Zipcode: {{ user.profile.zipcode }}
 
     table.table(ng-hide='empty')
-      tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | distanceFilter:distance") 
+      tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | orderBy: user.distance | distanceFilter:distance") 
         td
           .row
             div.col-sm-2.thumbnail

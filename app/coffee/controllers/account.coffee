@@ -3,6 +3,10 @@
 App = angular.module('App')
 
 App.controller "AccountCtrl", ($scope, $upload, $http, $location, $rootScope) ->
+    # if not logged in, redirect to login page
+    if not $rootScope.user
+        $location.path '/register'
+
     $scope.myInterests = $rootScope.user.profile.interests
 
     # forward click on image to file upload field
