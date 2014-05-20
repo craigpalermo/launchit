@@ -6,7 +6,7 @@ from app.api.user import UserList, UserDetail, GroupList, GroupDetail
 from app.util.JSONResponse import JSONResponse
 from app.models.interest import Interest
 from app.models.user_profile import UserProfile
-from app.settings import base as settings
+from app.settings.base import *
 from app.api import user
 
 import traceback, sys, json

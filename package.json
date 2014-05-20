@@ -6,6 +6,7 @@
     "jade": "*",
     "coffee-script": "*",
     "grunt": "~0.4.4",
+    "grunt-cli": "*",
     "grunt-shell": "~0.7.0",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-contrib-coffee": "~0.10.1",

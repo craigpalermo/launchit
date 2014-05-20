@@ -18,22 +18,22 @@
         p There doesn't seem to be anyone around you. Is your zipcode valid?
 
       div.col-sm-12.alert.alert-danger(ng-show='error')
-        p Oops, we ran into a problem while getting your data... 
+        p Oops, we ran into a problem while getting your data...
         p Is your zipcode valid?
         p Zipcode: {{ user.profile.zipcode }}
 
     table.table(ng-hide='empty')
-      tr(ng-repeat="user in filteredUsers = ( users| interestFilter:searchValues:'AND' | orderBy: user.distance | distanceFilter:distance )") 
+      tr(ng-repeat="user in filteredUsers = ( users| interestFilter:searchValues:'AND' | orderBy: user.distance | distanceFilter:distance )")
         td
           .row
             div.col-sm-2.thumbnail
               img(src='/media/{{user.profile.avatar}}')
             div.col-sm-4
-              h3 {{ user.username }} 
+              h3 {{ user.username }}
               table.profileTable
                 tr
                   td ZIP code
-                  td {{ user.profile.zipcode }} 
+                  td {{ user.profile.zipcode }}
                 tr
                   td Distance
                   td {{ user.distance | number:2 }} miles
@@ -45,7 +45,7 @@
                 p(ng-hide="user.profile.interests") None
 
     //- Show if filter doesn't match anybody
-    h3.alert.alert-info(ng-show='!filteredUsers.length') Nobody matches those criteria!
+    h3.alert.alert-info(ng-show='!filteredUsers.length && !error') Nobody matches those criteria!
   //- Only show if logged out
   div.jumbotron(ng-hide='user')
     h1 Find a friend, launch an idea.
