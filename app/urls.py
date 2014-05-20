@@ -81,9 +81,12 @@ def register(request):
 @ensure_csrf_cookie
 def auth(request):
     data = {}
+    input = json.loads(request.body)
 
-    if 'HTTP_AUTHORIZATION' in request.META:
-        uname, passwd = request.META['HTTP_AUTHORIZATION'].split(':')
+    if request.method == 'POST':
+        print request.POST
+        uname = input.get('username')
+        passwd = input.get('password')
         user = authenticate(username=uname, password=passwd)
         if user is not None:
             if user.is_active:
