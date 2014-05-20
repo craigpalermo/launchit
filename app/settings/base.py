@@ -1,40 +1,26 @@
 import os
+import development as current_env
 
 # Django settings for hammer project.
 ENV = os.environ.get('ENV', 'development').lower()
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-MANAGERS = ADMINS
+# import environment settings
+DEBUG          = current_env.DEBUG
+TEMPLATE_DEBUG = current_env.TEMPLATE_DEBUG
+DATABASES      = current_env.DATABASES
+TIME_ZONE      = current_env.TIME_ZONE
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'tmp.db',                        # Or path to database file if using sqlite3.
-        'USER': '',                              # Not used with sqlite3.
-        'PASSWORD': '',                          # Not used with sqlite3.
-        'HOST': '',                              # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                              # Set to empty string for default. Not used with sqlite3.
-    }
-}
+MANAGERS = ADMINS
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
-
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -167,29 +153,8 @@ COMPRESS_PRECOMPILERS = (
     ('text/ng-template', 'python manage.py ng_compile {infile} > {outfile}'),
 )
 
-if ENV == 'production':
-    #AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', None)
-    #AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', None)
-    #AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', None)
-    #AWS_PRELOAD_METADATA = True
-
-    COMPRESS_ENABLED = True
-    COMPRESS_OFFLINE = True
-    #COMPRESS_STORAGE = STATICFILES_STORAGE = 'app.util.storage.CachedS3BotoStorage'
-    COMPRESS_URL = STATIC_URL
-    COMPRESS_ROOT = STATIC_ROOT
-
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--failed', '--stop', '--processes=8', '--process-timeout=120', '--with-cov', '--cover-package=app']
-
-# Selenium grid settings
-SELENIUM_GRID = {
-    'url': 'http://ci.bnotions.com:5555/wd/hub',
-    'browser': 'iexplore',
-    'platform': 'ANY',
-    'javascriptEnabled': True,
-    'version': ''
-}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -233,7 +198,3 @@ LOGGING = {
     }
 }
 
-# Parse database configuration from $DATABASE_URL
-if os.environ.get('DATABASE_URL', False) != False:
-    import dj_database_url
-    DATABASES['default'] = dj_database_url.config()
