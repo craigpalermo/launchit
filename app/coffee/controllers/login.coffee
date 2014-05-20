@@ -9,10 +9,14 @@ App.controller "LoginCtrl", ($scope, $http, $location, $rootScope, $cookieStore)
         $scope.loading = true
         
         # set response header and send to server
-        response = $http.get("/auth",
-            headers:
-                Authorization: $scope.username + ":" + $scope.password
-        )
+        response = $http({
+            method: "post",
+            url: "/auth",
+            data: {
+                    username: $scope.username,
+                    password: $scope.password
+            }
+        })
         
         # response was success
         response.success((user, status) ->
