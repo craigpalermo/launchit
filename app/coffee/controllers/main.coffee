@@ -29,10 +29,11 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
           return
         )
 
-    # change route to signup page
+    # button to change route to signup page
     $scope.goRegister = ->
         $location.path('/register')
 
+    # only display other users whos interests match this user
     $scope.matchMyInterests = ->
         search = ""
         for item in $rootScope.user.profile.interests

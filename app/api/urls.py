@@ -15,6 +15,10 @@ import traceback, sys, json
 SUCCESS = 'success'
 ERROR = 'error'
 
+###############################################################################
+# Account Actions
+###############################################################################
+
 def add_interest(request):
     '''
     Add a new interest to the user's list of interests. If the interest
@@ -61,29 +65,6 @@ def remove_interest(request):
 
     return response
 
-
-def fetch_interests(request):
-    '''
-    Returns a list of all interests currently in the database
-    '''
-    try:
-        cursor = connection.cursor()
-        sql = "SELECT name FROM app_interest ORDER BY name"
-        cursor.execute(sql, [])
-        interests = [item[0] for item in cursor.fetchall()]
-        data = { 'result': SUCCESS,
-                 'message': '',
-                 'data': interests }
-        response = JSONResponse(data)
-    except:
-        data = { 'result': ERROR,
-                 'message': 'There was an error retrieving interests from the sever.' }
-        response = JSONResponse(data)
-        response.status_code = 500
-
-    return response
-
-
 def update_avatar(request):
     '''
     Update the user's profile picture
@@ -109,6 +90,70 @@ def update_avatar(request):
 
     return response
 
+###############################################################################
+# Queries
+###############################################################################
+
+def fetch_interests(request):
+    '''
+    Returns a list of all interests currently in the database
+    '''
+    try:
+        cursor = connection.cursor()
+        sql = "SELECT name FROM app_interest ORDER BY name"
+        cursor.execute(sql, [])
+        interests = [item[0] for item in cursor.fetchall()]
+        data = { 'result': SUCCESS,
+                 'message': '',
+                 'data': interests }
+        response = JSONResponse(data)
+    except:
+        data = { 'result': ERROR,
+                 'message': 'There was an error retrieving interests from the sever.' }
+        response = JSONResponse(data)
+        response.status_code = 500
+
+    return response
+
+def fetch_popular_interests(request):
+    '''
+    Returns a list of the 15 most popular interests based on the number of
+    users who have them.
+    '''
+    try:
+        cursor = connection.cursor()
+        sql = "SELECT interest_id, count(interest_id) \
+               FROM app_userprofile_interests         \
+               GROUP BY interest_id"
+               
+        cursor.execute(sql, [])
+        interest_ids = [(item[0], item[1]) for item in cursor.fetchall()]
+
+        results = [] 
+        for item in interest_ids:
+            temp = Interest.objects.get(id=item[0])
+            results.append((temp.name, item[1]))
+
+        # order descending by frequency
+        results = sorted(results, key=lambda tup: tup[1], reverse=True)
+
+        data = { 'result': SUCCESS,
+                 'message': '',
+                 'data': results }
+        response = JSONResponse(data)
+    except:
+        print traceback.format_exc()
+        data = { 'result': ERROR,
+                 'message': 'There was an error getting the list of popular interests.'}
+        response = JSONResponse(data)
+        response.status_code = 500
+
+    return response
+
+###############################################################################
+# URLs
+###############################################################################
+
 urlpatterns = patterns('',
     url(r'^/users/?$', UserList.as_view(), name='user-list'),
     url(r'^/users/(?P<pk>\d+)/?$', UserDetail.as_view(), name='user-detail'),
@@ -125,6 +170,7 @@ urlpatterns += patterns('',
     url(r'^/add_interest/', add_interest),
     url(r'^/remove_interest/', remove_interest),
     url(r'^/change_avatar/', update_avatar),
-    url(r'^/fetch_interests/', fetch_interests)
+    url(r'^/fetch_interests/', fetch_interests),
+    url(r'^/fetch_popular/', fetch_popular_interests)
 )
 

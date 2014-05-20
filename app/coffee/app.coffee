@@ -33,13 +33,6 @@ App.run(['$cookieStore', '$http', '$rootScope', ($cookieStore, $http, $rootScope
         )
 ])
 
-App.controller "IndexCtrl", ($scope, $rootScope, $location, $cookieStore) ->
-    # call this function to logout
-    $scope.logout = ->
-        $cookieStore.remove('api_key')
-        $rootScope.user = null
-        $location.path "/logout"
-
 App.directive "activeLink", [
   "$location"
   (location) ->

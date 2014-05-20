@@ -37,20 +37,28 @@ html.no-js(ng-app="App")
           small Find, friend, found.
 
         .row
-          div.col-md-2
-            ul.nav.nav-pills.nav-stacked
-              li
-                a(href='#/') Home
+          div.col-md-2(ng-controller='IndexCtrl')
+            .row
+              ul.nav.nav-pills.nav-stacked
+                li
+                  a(href='#/') Home
 
-              //- Only show when not logged in
-              li
-                a(href='#/register', ng-hide="user") Sign Up
+                //- Only show when not logged in
+                li
+                  a(href='#/register', ng-hide="user") Sign Up
 
-              //- Only show when logged in
-              li(ng-show="user")
-                a(href='#/account') My Account
-              li(ng-show="user", ng-controller='IndexCtrl')
-                a(ng-click='logout()') Sign Out
+                //- Only show when logged in
+                li(ng-show="user")
+                  a(href='#/account') My Account
+                li(ng-show="user", ng-controller='IndexCtrl')
+                  a(ng-click='logout()') Sign Out
+                li.nav-divider
+            .row              
+              h7 Popular Interests
+              {% verbatim %}
+              ul
+                li(ng-repeat="item in popular | limitTo:5") {{ item[0] }} // {{ item[1] }}
+              {% endverbatim %}
           div.col-sm-10
             div.view-frame(ng-view)
 
