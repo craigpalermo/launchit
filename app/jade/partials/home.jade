@@ -26,9 +26,9 @@
       tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | distanceFilter:distance") 
         td
           .row
-            div.col-md-2.thumbnail
+            div.col-sm-2.thumbnail
               img(src='/media/{{user.profile.avatar}}')
-            div.col-md-4
+            div.col-sm-4
               h3 {{ user.username }} 
               table.profileTable
                 tr
@@ -37,7 +37,7 @@
                 tr
                   td Distance
                   td {{ user.distance | number:2 }} miles
-            div.col-md-5
+            div.col-sm-5
               .row-fluid.interest-wrapper
                 h4 Interests:
                 div(ng-show="user.profile.interests")

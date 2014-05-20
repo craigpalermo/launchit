@@ -31,13 +31,13 @@ html.no-js(ng-app="App")
     link(rel="stylesheet", href="/static/css/style.css")
 
   body
-    .container
+    .container-fluid
       div.page-header
         h1 Launch It With Me 
           small Find, friend, found.
 
         .row
-          div.col-md-2(ng-controller='IndexCtrl')
+          div.col-sm-2(ng-controller='IndexCtrl')
             .row
               ul.nav.nav-pills.nav-stacked
                 li
@@ -54,13 +54,20 @@ html.no-js(ng-app="App")
                   a(ng-click='logout()') Sign Out
                 li.nav-divider
             .row              
-              h7 Popular Interests
-              {% verbatim %}
-              ul
-                li(ng-repeat="item in popular | limitTo:5") {{ item[0] }} // {{ item[1] }}
-              {% endverbatim %}
+              table.table
+                thead
+                  tr
+                    th Popular Interests
+                    th
+                {% verbatim %}
+                tbody
+                  tr(ng-repeat="item in popular | limitTo:7")
+                    td {{ item[0] }}
+                    td {{ item[1] }}
+                {% endverbatim %}
           div.col-sm-10
-            div.view-frame(ng-view)
+            .container-fluid
+              div.view-frame(ng-view)
 
     {% if user.is_authenticated %}
     script.
