@@ -23,7 +23,7 @@
         p Zipcode: {{ user.profile.zipcode }}
 
     table.table(ng-hide='empty')
-      tr(ng-repeat="user in users | interestFilter:searchValues:'AND' | orderBy: user.distance | distanceFilter:distance") 
+      tr(ng-repeat="user in filteredUsers = ( users| interestFilter:searchValues:'AND' | orderBy: user.distance | distanceFilter:distance )") 
         td
           .row
             div.col-sm-2.thumbnail
@@ -44,6 +44,8 @@
                   div.interest.label.label-primary(ng-repeat="interest in user.profile.interests") {{ interest }}
                 p(ng-hide="user.profile.interests") None
 
+    //- Show if filter doesn't match anybody
+    h3.alert.alert-info(ng-show='!filteredUsers.length') Nobody matches those criteria!
   //- Only show if logged out
   div.jumbotron(ng-hide='user')
     h1 Find a friend, launch an idea.
