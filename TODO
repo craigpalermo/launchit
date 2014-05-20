@@ -6,6 +6,7 @@ Bugs:
         - users aren't correctly sorted by distance
         - partial words match in the search box, ex. 'pyth haskell' matches
           'python haskell'
+        - position of Xs on account page change based on longest interest name
 
 General:
 X    - persistent login
@@ -16,6 +17,7 @@ Home Page:
 X    - add filter to restrict users shown by specific interests
 X    - make sure it sorts users by distance
 X    - make boxes for users look nice
+     - change interest label colors depending on if current user has that interest
 
 Registration Page:
 X    - form validation for registration
