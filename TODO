@@ -1,6 +1,12 @@
 Things To Do - updated 5/14
 ===============================================================================
 
+Bugs:
+    Home:
+        - users aren't correctly sorted by distance
+        - partial words match in the search box, ex. 'pyth haskell' matches
+          'python haskell'
+
 General:
 X    - persistent login
 X    - add user profile pics
