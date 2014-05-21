@@ -9,6 +9,11 @@ from JSONResponse import JSONResponse
 import json
 import math
 import operator
+import traceback
+
+# define success/error constants
+SUCCESS = 'success'
+ERROR = 'error'
 
 @csrf_exempt
 def users_in_range(request):
@@ -19,14 +24,15 @@ def users_in_range(request):
 
     if not zipcode:
         # missing zipcode or other input, return nothing
-        response = JSONResponse()
-        response.status_code = 409
-        return response
+		data = {'status': ERROR, 'message': 'Missing zipcode.'}
+		response = JSONResponse(data)
+		response.status_code = 409
+		return response
     
     try:
         zips = get_zips_in_range(zipcode, range)
     except:
-        data = {'status': 'error', 'message': 'Error getting zipcodes in range.'}
+        data = {'status': ERROR, 'message': traceback.format_exc()}
         response = JSONResponse(data)
         response.status_code = 409
         return response
@@ -45,7 +51,8 @@ def users_in_range(request):
         serializer.data['distance'] = zip_distances[profile.zipcode]
         results.append(serializer.data)
 
-    return JSONResponse(results)
+	data = {'status': SUCCESS, 'message': 'Successfully retrieved users in range.', 'data': results}
+    return JSONResponse(data)
     
 @csrf_exempt
 def zips_view(request):
