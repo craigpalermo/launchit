@@ -5,7 +5,6 @@ App = angular.module("App")
 App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
     # set flags for the home page
     $scope.error = false
-    console.log $rootScope.user
     $scope.loading = true
 
     if $rootScope.user
@@ -21,7 +20,6 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
             $scope.error = false
             $scope.loading = false
             $scope.users = data.data
-            console.log data.data
             return
         )
         
