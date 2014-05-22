@@ -4,6 +4,7 @@ App = angular.module("App")
 
 App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
     if $rootScope.user
+        # set error and loading flags
         $scope.error = false
         $scope.loading = true
 
