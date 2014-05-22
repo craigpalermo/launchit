@@ -19,7 +19,7 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
         response.success((data, status) ->
             $scope.error = false
             $scope.loading = false
-            $scope.users = data.data
+            $rootScope.users = data.data
             return
         )
         
