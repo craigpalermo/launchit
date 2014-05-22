@@ -30,6 +30,20 @@ App.run(['$cookieStore', '$http', '$rootScope', ($cookieStore, $http, $rootScope
         response = $http.post('/api/login', { api_key: api_key })
         response.success((user, status) ->
             $rootScope.user = user
+
+            # populate the main page with other users after logging in
+            data = {
+                zipcode:  $rootScope.user.profile.zipcode
+            }
+
+            response = $http.post("/api/users_in_range", data)
+            
+            response.success((data, status) ->
+                $rootScope.users = data.data
+                return
+            ).error((data, status) ->
+                return
+            )
         )
 ])
 
