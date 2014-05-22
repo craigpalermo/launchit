@@ -78,6 +78,7 @@ def register(request):
     response.status_code = 409
     return response
 
+@csrf_exempt
 @ensure_csrf_cookie
 def auth(request):
     data = {}
@@ -96,7 +97,10 @@ def auth(request):
 
                     # Once we have logged the user in return the serialized response
                     serializer = api.user.UserSerializer(request.user)
-                    return JSONResponse(serializer.data)
+                    data['result'] = 'success'
+                    data['message'] = 'User logged in.'
+                    data['user'] = serializer.data
+                    return JSONResponse(data)
     except:
         data['result']  = "error"
         data['message'] = "There was an error contacting the database."

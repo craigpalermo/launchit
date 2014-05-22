@@ -19,13 +19,13 @@ App.controller "LoginCtrl", ($scope, $http, $location, $rootScope, $cookieStore)
         })
         
         # response was success
-        response.success((user, status) ->
-            $rootScope.user = user
+        response.success((data, status) ->
+            $rootScope.user = data.user
             App.config ["$httpProvider",
                 ($httpProvider) ->
-                  $httpProvider.defaults.headers.common["Authorization"] = "Token " + user.api_key
+                  $httpProvider.defaults.headers.common["Authorization"] = "Token " + data.user.api_key
             ]
-            $cookieStore.put('api_key', user.api_key)
+            $cookieStore.put('api_key', data.user.api_key)
             $location.path "/"
             return
         )
