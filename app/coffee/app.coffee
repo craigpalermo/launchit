@@ -40,6 +40,8 @@ App.run(['$cookieStore', '$http', '$rootScope', ($cookieStore, $http, $rootScope
             
             response.success((data, status) ->
                 $rootScope.users = data.data
+                $rootScope.loading = false
+                console.log $rootScope.users
                 return
             ).error((data, status) ->
                 return

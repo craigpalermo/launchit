@@ -1,5 +1,5 @@
 //- Only show if logged in
-.row
+.row(ng-hide='loading')
   div.col-sm-12(ng-show='user')
     .row#searchBar
       div.col-sm-9
@@ -20,7 +20,7 @@
         p Zipcode: {{ user.profile.zipcode }}
         p {{ message }}
 
-    table.table(ng-hide='loading')
+    table.table
       tr(ng-repeat="user in filteredUsers = ( users | interestFilter:searchValues:'AND' | orderBy: user.distance | distanceFilter:distance )")
         td
           .row
