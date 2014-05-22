@@ -13,7 +13,7 @@ Bugs:
         - position of Xs on account page change based on longest interest name
 
 General:
-    - add favicon
+X    - add favicon
 X    - persistent login
 X    - add user profile pics
 X    - add live updated list of popular interests below navbar
@@ -23,6 +23,7 @@ X    - add filter to restrict users shown by specific interests
 X    - make sure it sorts users by distance
 X    - make boxes for users look nice
      - change interest label colors depending on if current user has that interest
+     - paginate results
 
 Registration Page:
 X    - form validation for registration
