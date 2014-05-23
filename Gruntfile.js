@@ -50,7 +50,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: "app/coffee/controllers/",
                     src: ['**/*.coffee'],
-                    dest: 'app/static/js',
+                    dest: 'app/static/js/controllers',
                     ext: '.js'
                 }]
             }

@@ -39,7 +39,7 @@
               .row-fluid.interest-wrapper
                 h4 Interests:
                 div(ng-show="user.profile.interests")
-                  div.interest.label.label-primary(ng-repeat="interest in user.profile.interests") {{ interest }}
+                  span.label.interest(ng-class="getClass(interest)", ng-repeat="interest in user.profile.interests") {{ interest }}
                 p(ng-hide="user.profile.interests") None
 
     //- Show if filter doesn't match anybody

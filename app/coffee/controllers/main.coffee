@@ -3,6 +3,15 @@
 App = angular.module("App")
 
 App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
+
+    # determines which color an interest's label should be;
+    # green if it's in interests list, gray otherwise
+    $scope.getClass = (interest) ->
+        if interest in $rootScope.user.profile.interests
+            return 'label-success'
+        else
+            return 'label-default'
+
     if $rootScope.user
         # set error and loading flags
         $scope.error = false
@@ -17,9 +26,9 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
         
         # response was success
         response.success((data, status) ->
+            $scope.users = data.data
             $scope.error = false
             $scope.loading = false
-            $scope.users = data.data
             return
         )
         
