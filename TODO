@@ -3,7 +3,7 @@ Things To Do - updated 5/20
 
 Bugs:
     Home:
-        - if already logged in and on home page, after refreshing, the home page isn't repopulated.
+X        - if already logged in and on home page, after refreshing, the home page isn't repopulated.
             it still works correctly when logging in and going from login page to home page. this might be because
             after refreshing, rootScope.user becomes null again and isn't being initialized.
         - users aren't correctly sorted by distance
@@ -22,7 +22,7 @@ Home Page:
 X    - add filter to restrict users shown by specific interests
 X    - make sure it sorts users by distance
 X    - make boxes for users look nice
-     - change interest label colors depending on if current user has that interest
+X     - change interest label colors depending on if current user has that interest
      - paginate results
 
 Registration Page:
