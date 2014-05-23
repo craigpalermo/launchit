@@ -6,7 +6,7 @@ Bugs:
 X        - if already logged in and on home page, after refreshing, the home page isn't repopulated.
             it still works correctly when logging in and going from login page to home page. this might be because
             after refreshing, rootScope.user becomes null again and isn't being initialized.
-        - users aren't correctly sorted by distance
+X        - users aren't correctly sorted by distance
         - partial words match in the search box, ex. 'pyth haskell' matches
           'python haskell'
     Account:

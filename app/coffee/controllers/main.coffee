@@ -4,15 +4,15 @@ App = angular.module("App")
 
 App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
 
-    # determines which color an interest's label should be;
-    # green if it's in interests list, gray otherwise
-    $scope.getClass = (interest) ->
-        if interest in $rootScope.user.profile.interests
-            return 'label-success'
-        else
-            return 'label-default'
-
     if $rootScope.user
+        # determines which color an interest's label should be;
+        # green if it's in interests list, gray otherwise
+        $scope.getClass = (interest) ->
+            if interest in $rootScope.user.profile.interests
+                return 'label-success'
+            else
+                return 'label-default'
+
         # set error and loading flags
         $scope.error = false
         $scope.loading = true
@@ -26,7 +26,20 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
         
         # response was success
         response.success((data, status) ->
-            $scope.users = data.data
+            $scope.users = []
+
+            # convert user's distance to float before adding to scope
+            angular.forEach(data.data, (user) ->
+                # if user hasn't set prof pic, show default pic
+                if user.profile.avatar is ""
+                    user.profile.avatar = 'https://placefull.com/Content/Properties/base/images/no-profile-image.png'
+                else
+                    user.profile.avatar = "/media/" + user.profile.avatar
+
+                user.distance = parseFloat(user.distance)
+                $scope.users.push(user)
+            )
+            
             $scope.error = false
             $scope.loading = false
             return
@@ -40,6 +53,13 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
           return
         )
 
+    # sort list of users by distance
+    $scope.mySortFunction = ((item) ->
+        if(isNaN(item['distance']))
+            return item['distance']
+        return parseFloat(item['distance'])
+    )
+
     # button to change route to signup page
     $scope.goRegister = ->
         $location.path('/register')
@@ -50,6 +70,7 @@ App.controller "MainCtrl", ($scope, $http, $location, $rootScope) ->
         for item in $rootScope.user.profile.interests
             search += "#{item} "
         $scope.searchValues = search
+
 
 App.filter "distanceFilter", ->
     (input, distance) ->
